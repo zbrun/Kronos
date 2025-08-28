@@ -1,9 +1,10 @@
+import os
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
-sys.path.append("../")
-from model import Kronos, KronosTokenizer, KronosPredictor
 
+from model import r, KronosTokenizer, KronosPredictor
 
 def plot_prediction(kline_df, pred_df):
     pred_df.index = kline_df.index[-pred_df.shape[0]:]
@@ -35,7 +36,7 @@ def plot_prediction(kline_df, pred_df):
     ax2.grid(True)
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("./data/test.png", dpi=300)  # 保存成 PNG，高分辨率
 
 
 # 1. Load Model and Tokenizer
@@ -70,7 +71,7 @@ pred_df = predictor.predict(
 
 # 5. Visualize Results
 print("Forecasted Data Head:")
-print(pred_df.head())
+print(pred_df.tail())
 
 # Combine historical and forecasted data for plotting
 kline_df = df.loc[:lookback+pred_len-1]
